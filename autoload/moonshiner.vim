@@ -10,35 +10,35 @@ endfunction
 
 " Autocomplete code function
 function! moonshiner#Complete(findstart, base)
-	  if (a:findstart)
-	    let l:line = getline('.')
-	    let l:start = col('.') - 1
+  if (a:findstart)
+    let l:line = getline('.')
+    let l:start = col('.') - 1
 
-	    while l:start > 0 && l:line[l:start - 1] =~ '\a'
-	      let l:start -= 1
-	    endwhile
+    while l:start > 0 && l:line[l:start - 1] =~ '\a'
+      let l:start -= 1
+    endwhile
 
-      return l:start
-	  else
-	    let l:filtered_suggestions = []
-      let l:code = substitute(join(getline(1, '$'), '<CR>'), "!", "<EXCLAMATION>", "g")
-      let l:nCol = col('.')
-      let l:nRow = line('.')
-      let l:suggestions = s:GetSuggestions(l:code, l:nCol, l:nRow, a:base)
+    return l:start
+  else
+    let l:filtered_suggestions = []
+    let l:code = substitute(join(getline(1, '$'), '<CR>'), "!", "<EXCLAMATION>", "g")
+    let l:nCol = col('.')
+    let l:nRow = line('.')
+    let l:suggestions = s:GetSuggestions(l:code, l:nCol, l:nRow, a:base)
 
-	    for s in l:suggestions
-        if (a:base != "")
-          if (s["word"] =~ '^' . a:base)
-            call add(l:filtered_suggestions, s)
-  	      endif
-        else
-         call add(l:filtered_suggestions, s)
+    for s in l:suggestions
+      if (a:base != "")
+        if (s["word"] =~ '^' . a:base)
+          call add(l:filtered_suggestions, s)
         endif
-	    endfor
+      else
+       call add(l:filtered_suggestions, s)
+      endif
+    endfor
 
-	    return l:filtered_suggestions
-	  endif
-	endfunction
+    return l:filtered_suggestions
+  endif
+endfunction
 
 " Retreive Elixir Sense connection string
 function! s:FindElixirSenseServer()

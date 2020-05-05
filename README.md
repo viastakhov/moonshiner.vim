@@ -3,7 +3,7 @@ Vim plugin providing Elixir code completion.
 
 [![License](https://img.shields.io/badge/License-EPL%201.0-red.svg)](https://www.eclipse.org/legal/epl-v10.html)
 
-<img src="https://i0.wp.com/oadbyhydroponics.co.uk/wp-content/uploads/2018/06/Moonshine-Logo.jpg" width="120" align="right">
+<img src="https://i0.wp.com/oadbyhydroponics.co.uk/wp-content/uploads/2018/06/Moonshine-Logo.jpg" width="140" align="right">
 
 ## Features:
  * Code completion for functions.
