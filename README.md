@@ -31,6 +31,7 @@ This plugin uses omni-completion feature, so that in order to call code completi
 ```viml
 <C-x>-<C-o>
 ```
+<center><img src="demo.png" width="500" align="middle"></center>
 
 ## Credits
 This plugin uses [ElixirSense](https://github.com/elixir-lsp/elixir_sense), an API/Server for Elixir projects that provides context-aware information for code completion, documentation, go/jump to definition, signature info and more.
