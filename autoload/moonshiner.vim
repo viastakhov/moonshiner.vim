@@ -21,7 +21,9 @@ function! moonshiner#Complete(findstart, base)
     return l:start
   else
     let l:filtered_suggestions = []
-    let l:code = substitute(join(getline(1, '$'), '<CR>'), "!", "<EXCLAMATION>", "g")
+    let l:code = substitute(join(getline(1, '$'), '<?CR?>'), "!", "<?EXCLAMATION?>", "g")
+    let l:code = substitute(l:code, '"', "<?QUOTES?>", "g")
+    let l:code = substitute(l:code, '#', "<?HASH?>", "g")
     let l:nCol = col('.')
     let l:nRow = line('.')
     let l:suggestions = s:GetSuggestions(l:code, l:nCol, l:nRow, a:base)

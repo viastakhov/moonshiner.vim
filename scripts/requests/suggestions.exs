@@ -10,8 +10,10 @@
 [host, port, token, code, line, column] = System.argv
 
 source_code = code
-              |> String.replace("<CR>", "\n")
-              |> String.replace("<EXCLAMATION>", "!")
+              |> String.replace("<?CR?>", "\n")
+              |> String.replace("<?EXCLAMATION?>", "!")
+              |> String.replace("<?QUOTES?>",  "\"")
+              |> String.replace("<?HASH?>",  "#")
 
 {:ok, socket} = :gen_tcp.connect(to_charlist(host), String.to_integer(port), [:binary, active: false, packet: 4])
 
