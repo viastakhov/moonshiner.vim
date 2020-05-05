@@ -1,0 +1,43 @@
+*moonshiner.txt*
+
+     #     #                       #####				~
+     ##   ##  ####   ####  #    # #     # #    # # #    # ###### #####	~
+     # # # # #    # #    # ##   # #       #    # # ##   # #      #    #	~
+     #  #  # #    # #    # # #  #  #####  ###### # # #  # #####  #    #	~
+     #     # #    # #    # #  # #       # #    # # #  # # #      #####	~
+     #     # #    # #    # #   ## #     # #    # # #   ## #      #   #	~
+     #     #  ####   ####  #    #  #####  #    # # #    # ###### #    #	~
+
+==============================================================================
+
+CONTENTS					                                       *moonshiner-contents*
+
+1. Description	      |moonshiner-description|
+2. Installation	      |moonshiner-installation|
+3. Abou		      |moonshiner-about|
+4. Version History    |moonshiner-history|
+==============================================================================
+
+DESCRIPTION						                                *moonshiner-description*
+
+Vim plugin providing Elixir code completion.
+==============================================================================
+
+INSTALLATION						                             *moonshiner-installation*
+
+* Add this line to your .vimrc (example for [vim-plugin] manager):
+  Plugin 'viastakhov/moonshiner.vim'
+* Restart vim application
+==============================================================================
+
+ABOUT                                         							*moonshiner-about*
+
+Developer: Vladimir Astakhov <viastakhov@mail.ru>
+==============================================================================
+
+VERSION HISTORY						                                *moonshiner-history*
+
+Please refer to the file [CHANGELOG.md]
+==============================================================================
+
+vim:ft=help:tw=78:ts=8:
