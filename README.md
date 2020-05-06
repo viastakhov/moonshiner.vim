@@ -9,7 +9,7 @@ Vim plugin providing Elixir code completion.
  * Code completion for functions.
  * Windows platform support.
 
-*Note: this plugin does not support Linux platform at the moment. Please refer to [TODO.md](./TODO.md).*
+*Note: this plugin does not support Linux platform at the moment. Please refer to the issue [#3](https://github.com/viastakhov/moonshiner.vim/issues/3).*
 
 ## Installation
 ### Environment requirements
