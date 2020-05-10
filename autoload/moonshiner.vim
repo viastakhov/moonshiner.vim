@@ -1,11 +1,21 @@
 let s:path_project = expand('<sfile>:p:h')
-let s:se_log_file = $TMP . '\moonshiner-vim-es.log'
-let g:IsElixirSenseServerFound = 0
 
 " Run Exlixir Sense server
-function! moonshiner#RunElixirSenseServer()
+function! moonshiner#RunElixirSenseServer(cwd, log_file)
   let l:elixir_sense_script = s:path_project . '.\..\elixir_sense\run.exs'
-  silent exec '!start /b elixir ' . l:elixir_sense_script . ' tcpip 0 dev > ' . s:se_log_file
+  let l:deleted = utils#DeleteFile(a:log_file)
+
+  if (l:deleted == 0)
+    call writefile([], a:log_file)
+    let l:msg = "Please wait! Running Elixir Senser server "
+    silent exe '!start /b powershell Start-Process -WorkingDirectory "' . a:cwd . '" -WindowStyle Hidden -RedirectStandardOutput "' . a:log_file . '" -FilePath "elixir" -ArgumentList "' . l:elixir_sense_script . '", "tcpip", "0", "dev"'
+
+    while (readfile(a:log_file) == [])
+      sleep 500m
+      let l:msg .= '.'
+      echomsg l:msg
+    endwhile
+  endif
 endfunction
 
 " Autocomplete code function
@@ -44,16 +54,24 @@ endfunction
 
 " Retreive Elixir Sense connection string
 function! s:FindElixirSenseServer()
-  let l:info = readfile(s:se_log_file)
+  let l:mix_folder = utils#FindMixFile()
+
+  if (l:mix_folder == '')
+    let l:cwd = expand('%:p:h')
+    let l:se_log_file = $TMP . '\' . utils#ToHex(l:cwd)
+  else
+    let l:cwd = l:mix_folder
+    let l:se_log_file = $TMP . '\' . utils#ToHex(l:mix_folder)
+  endif
+
+  call moonshiner#RunElixirSenseServer(l:cwd, l:se_log_file)
+  let l:info = readfile(l:se_log_file)
   return matchlist(l:info[0], '\m\(.*\):\(.*\):\(.*\):\(.*\)$')
 endfunction
 
 " Retreive code completion suggestions from Elixir Sense server
 function! s:GetSuggestions(code, nCol, nRow, base)
-  if (g:IsElixirSenseServerFound != 1)
-    let [_, g:es_status, g:es_host, g:es_port, g:es_token; _] = s:FindElixirSenseServer()
-    let g:IsElixirSenseServerFound = 1
-  endif
+  let [_, g:es_status, g:es_host, g:es_port, g:es_token; _] = s:FindElixirSenseServer()
 
   if (g:es_status != 'ok')
     echohl ErrorMsg

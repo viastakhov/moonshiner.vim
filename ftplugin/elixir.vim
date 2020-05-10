@@ -3,6 +3,3 @@ if exists('b:did_ftplugin')
 endif
 
 let b:did_ftplugin = 1
-
-" Elixir Sense server must be started first
-call moonshiner#RunElixirSenseServer()

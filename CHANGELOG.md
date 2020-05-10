@@ -6,9 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
-### Chnged
-- Deleted TODO.md, please refer to [Issues](https://github.com/viastakhov/moonshiner.vim/issues) instead.
+### Changed
 - Changed [README.md](./README.md)
+
+### Fixed
+- Code completion doesn't work for functions of user defined modules (Issue #1)
+
+### Removed
+- TODO.md file, please refer to [Issues](https://github.com/viastakhov/moonshiner.vim/issues) instead.
 
 ## [0.0.1] - 2020-05-05
 ### Added
