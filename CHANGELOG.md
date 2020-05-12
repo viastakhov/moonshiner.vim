@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Changed
 - Changed [README.md](./README.md)
+- Improved source code transfering into Elixir Sense server (Issue #2)
 
 ### Fixed
 - Code completion doesn't work for functions of user defined modules (Issue #1)

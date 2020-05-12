@@ -7,13 +7,13 @@ function! moonshiner#RunElixirSenseServer(cwd, log_file)
 
   if (l:deleted == 0)
     call writefile([], a:log_file)
-    let l:msg = "Please wait! Running Elixir Senser server "
+    let l:msg = "Please wait! Running Elixir Sense server "
     silent exe '!start /b powershell Start-Process -WorkingDirectory "' . a:cwd . '" -WindowStyle Hidden -RedirectStandardOutput "' . a:log_file . '" -FilePath "elixir" -ArgumentList "' . l:elixir_sense_script . '", "tcpip", "0", "dev"'
 
     while (readfile(a:log_file) == [])
       sleep 500m
       let l:msg .= '.'
-      echomsg l:msg
+      echo l:msg
     endwhile
   endif
 endfunction
@@ -31,12 +31,13 @@ function! moonshiner#Complete(findstart, base)
     return l:start
   else
     let l:filtered_suggestions = []
-    let l:code = substitute(join(getline(1, '$'), '<?CR?>'), "!", "<?EXCLAMATION?>", "g")
-    let l:code = substitute(l:code, '"', "<?QUOTES?>", "g")
-    let l:code = substitute(l:code, '#', "<?HASH?>", "g")
     let l:nCol = col('.')
     let l:nRow = line('.')
-    let l:suggestions = s:GetSuggestions(l:code, l:nCol, l:nRow, a:base)
+    let l:code = getline(1, '$')
+    let l:source_code_path = tempname()
+    call writefile(l:code, l:source_code_path)
+    let l:suggestions = s:GetSuggestions(l:source_code_path, l:nCol, l:nRow, a:base)
+    call delete(l:source_code_path)
 
     for s in l:suggestions
       if (a:base != "")
@@ -70,7 +71,7 @@ function! s:FindElixirSenseServer()
 endfunction
 
 " Retreive code completion suggestions from Elixir Sense server
-function! s:GetSuggestions(code, nCol, nRow, base)
+function! s:GetSuggestions(source_code_path, nCol, nRow, base)
   let [_, g:es_status, g:es_host, g:es_port, g:es_token; _] = s:FindElixirSenseServer()
 
   if (g:es_status != 'ok')
@@ -81,16 +82,16 @@ function! s:GetSuggestions(code, nCol, nRow, base)
     return []
   endif
 
-  let tempname = tempname()
-  call writefile([], tempname)
+  let l:tempname = tempname()
+  call writefile([], l:tempname)
   silent exec '!start /b elixir ' . s:path_project . '.\..\scripts\requests\suggestions.exs '
-    \ . g:es_host . ' ' . g:es_port . ' "' . g:es_token . '" "' . a:code . '" '
+    \ . g:es_host . ' ' . g:es_port . ' "' . g:es_token . '" "' . a:source_code_path . '" '
     \ . a:nRow . ' ' . a:nCol
-    \ . ' > ' tempname
-  let l:lines = readfile(tempname)
+    \ . ' > ' l:tempname
+  let l:lines = readfile(l:tempname)
 
   while (l:lines == []) || (l:lines[-1] != '<EOF>')
-    let l:lines = readfile(tempname)
+    let l:lines = readfile(l:tempname)
   endwhile
 
   let l:suggestions = []
@@ -124,6 +125,6 @@ function! s:GetSuggestions(code, nCol, nRow, base)
     endif
   endfor
 
-  call delete(tempname)
+  call delete(l:tempname)
   return l:suggestions
 endfunction

@@ -4,17 +4,12 @@
 #  - host: hostname of the server
 #  - port: listening port of the server
 #  - token: secure token in order to send request
-#  - code: preformated Elixir source code
+#  - path: path to Elixir source code
 #  - line, column: cursor position on the source code
 
-[host, port, token, code, line, column] = System.argv
+[host, port, token, path, line, column] = System.argv
 
-source_code = code
-              |> String.replace("<?CR?>", "\n")
-              |> String.replace("<?EXCLAMATION?>", "!")
-              |> String.replace("<?QUOTES?>",  "\"")
-              |> String.replace("<?HASH?>",  "#")
-
+{:ok, source_code} = File.read(path)
 {:ok, socket} = :gen_tcp.connect(to_charlist(host), String.to_integer(port), [:binary, active: false, packet: 4])
 
 request = %{
