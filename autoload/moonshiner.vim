@@ -1,6 +1,6 @@
 let s:path_project = expand('<sfile>:p:h')
 
-" Run Exlixir Sense server
+" Run Elixir Sense server
 function! moonshiner#RunElixirSenseServer(cwd, log_file)
   let l:elixir_sense_script = s:path_project . '.\..\elixir_sense\run.exs'
   let l:deleted = utils#DeleteFile(a:log_file)
