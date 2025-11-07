@@ -37,6 +37,4 @@ This plugin uses omni-completion feature, so that in order to call code completi
 This plugin uses [ElixirSense](https://github.com/elixir-lsp/elixir_sense), an API/Server for Elixir projects that provides context-aware information for code completion, documentation, go/jump to definition, signature info and more.
 
 ## License
-Copyright © 2020 Vladimir Astakhov [viastakhov@mail.ru]
-
 Distributed under the Eclipse Public License 1.0.
